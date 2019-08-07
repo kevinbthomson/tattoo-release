@@ -1,0 +1,9 @@
+.statements-list {
+  list-style: none;
+  padding: 0;
+
+  &__item {
+    list-style: none;
+    border: 1px solid lime;
+  }
+}

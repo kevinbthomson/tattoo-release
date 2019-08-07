@@ -1,0 +1,13 @@
+@import "styles/modules/header";
+@import "styles/modules/statements";
+@import "styles/modules/forms";
+
+.container {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 640px;
+}
+
+footer {
+  text-align: center;
+}
