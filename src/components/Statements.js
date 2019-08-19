@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 class Statements extends React.Component {
   render() {
@@ -6,7 +7,7 @@ class Statements extends React.Component {
       <section className="container">
         <h2>Please check all statements that apply to you.</h2>
 
-        <ul className="statements-list">
+        <StatementsList>
           <li className="statements-list__item">
             <label>
               <input type="checkbox" name="" /> I am at least eighteen (18) years of
@@ -92,10 +93,20 @@ class Statements extends React.Component {
               healing process:
             </label>
           </li>
-        </ul>
+        </StatementsList>
       </section>
     );
   }
 }
+
+const StatementsList = styled.ul`
+  list-style: none;
+  padding: 0;
+
+  &__item {
+    list-style: none;
+    border: 1px solid lime;
+  }
+`;
 
 export default Statements;

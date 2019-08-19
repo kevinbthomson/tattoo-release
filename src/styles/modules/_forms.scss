@@ -5,17 +5,27 @@
 fieldset {
   position: relative;
   margin: 1rem 0;
-  border: 1px solid black;
+  padding-top: 1rem;
+  background: #fff3f5;
+  border: 1px solid darkmagenta;
+  // box-shadow: 2px 2px 0 darkmagenta;
 
   legend {
-    font-style: italic;
+    position: absolute;
+    top: -0.5rem;
+    left: -1rem;
+    color: darkmagenta;
+    padding: 0.25em 1em;
+    border: 1px solid darkmagenta;
     display: block;
-    background: pink;
+    background: lighten(pink, 4);
+    transform: skewX(-10deg);
+    box-shadow: 2px 2px 0 darkmagenta;
   }
 }
 
 label {
-  color: #333333;
+  color: darken(darkmagenta, 5);
   display: block;
 }
 
@@ -27,7 +37,8 @@ textarea,
 select {
   background: white;
   font-size: 1rem;
-  border: 1px solid #333333;
+  font-family: "Courier New", Courier, monospace;
+  border: 1px solid darkmagenta;
   padding: 0.5rem;
   width: 100%;
 }

@@ -1,43 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 
 import Statements from './components/Statements';
 import Header from './components/Header';
+import Clients from './components/Clients';
 import Client from './components/Client';
 import AddAppointment from './components/AddAppointment';
 import Footer from './components/Footer';
 
-class App extends Component {
-  state = {
-    clients: {}
+const App = () => {
+  const initialClients = () => JSON.parse(localStorage.getItem('clients')) || []; 
+  const [clients, setClients] = useState(initialClients);
+  
+  useEffect(() => {
+    localStorage.setItem('clients', JSON.stringify(clients));
+  }, [clients]);
+
+  const addClient = (client) => {
+    setClients([ ...clients, client]);
   };
 
-  addClient = (client) => {
-    // 1. take a copy of state
-    const clients = {...this.state.clients};
-    // 2 add client to copy
-    clients[`client${Date.now()}`] = client;
-    // 3. update state
-    this.setState({
-      clients
-    });
-  };
+  return (
+    <div className="App">
+      <Header />
 
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        
-        <Client addClient={this.addClient} />
-        
-        <Statements />
-        
-        <AddAppointment />
-        
-        <Footer />
-      </div>
-    );
-  }
-}
+      <Clients clients={ clients } />
+      
+      <Client addClient={ addClient } />
+      
+      <Statements />
+      
+      <AddAppointment />
+      
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
