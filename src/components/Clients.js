@@ -23,8 +23,8 @@ const Clients = ({ clients, addClient, editClient, deleteClient }) => (
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="5">
-            <Button style={{float: 'right'}}>
+          <td colSpan="5">
+            <Button className="float-right">
               <Link to="/clients/client/:new">+ Add Client</Link>
             </Button>
           </td>

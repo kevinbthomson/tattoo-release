@@ -10,7 +10,7 @@ const ClientRow = ({ client, deleteClient }) => {
       <td>{client.phone}</td>
       <td>{client.email}</td>
       <td>
-        <Button>
+        <Button className="float-right">
           <Link to={ `clients/client/${client.id}` }>Edit</Link>
         </Button>
       </td>

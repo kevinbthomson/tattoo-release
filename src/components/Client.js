@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Statements from './Statements';
 import { Button } from '../Elements';
+import Emoji from './Emoji';
 
 const Client = ({ history, match, clients, addClient, editClient, deleteClient }) => {
   const currentClient = clients.find(client => client.id === match.params.id);
@@ -8,7 +9,7 @@ const Client = ({ history, match, clients, addClient, editClient, deleteClient }
   
   const [client, setClient] = useState(initialClientState);
 
-  const handleChange = e => {
+  const handleInputChange = e => {
     const inputValue = e.target.value;
     const inputName = e.target.name;
     setClient({ ...client, [inputName]: inputValue });
@@ -34,43 +35,64 @@ const Client = ({ history, match, clients, addClient, editClient, deleteClient }
     }
   };
 
+  const renderInput = (name, type, placeholder, required) => {
+    if (client.id) {
+      return (
+        <input
+          type={ type } 
+          name={ name }
+          placeholder={ placeholder }
+          value={ client[name] }
+          onChange={ handleInputChange }
+          required={ required }
+        />
+      );
+    } else {
+      return (
+        <input 
+          type={ type } 
+          name={ name }
+          placeholder={ placeholder }
+          onChange={ handleInputChange }
+          required={ required }
+        />
+      );
+    }
+  };
+
   return (
     <>
     <form onSubmit={ clientSubmit } className="user-form container">
-      <h2>{ client.first && client.last ? `${client.first} ${client.last}` : `Add Client:` }</h2>
+      <h2>
+        <Emoji emoji="😀" label="Smiling Face" /> { client.first && client.last ? `${client.first} ${client.last}` : `Add Client:` }
+      </h2>
       
       <fieldset>
         <legend>Client Info</legend>
         
         <div className="form-group">
           <label htmlFor="first">*Name:</label>
-          <input type="text" name="first" placeholder="First Name" value={ client.first } onChange={ handleChange } required />
+          {renderInput('first', 'text', 'First Name', true)}
         </div>
         
         <div className="form-group">
           <label htmlFor="last">*Last Name:</label>
-          <input type="text" name="last" placeholder="Last Name" value={ client.last } onChange={ handleChange } required />
+          {renderInput('last', 'text', 'Last Name', true)}
         </div>
         
         <div className="form-group">
           <label htmlFor="dob">Date of Birth:</label>
-          <input 
-            type="date" 
-            name="dob"
-            placeholder="Date of Birth" 
-            value={ client.dob }
-            onChange={ handleChange } 
-          />
+          {renderInput('dob', 'date', 'Date of Birth')}
         </div>
 
         <div className="form-group">
           <label htmlFor="stateId">State-issued ID:</label>
-          <input type="text" name="stateId" placeholder="ID Number" value={ client.stateId } onChange={ handleChange } />
+          {renderInput('stateId', 'text', 'State ID Number')}
         </div>
 
         <div className="form-group">
           <label htmlFor="referred">Referred By:</label>
-          <input type="text" name="referred" placeholder="Referred Name" value={ client.referred } onChange={ handleChange } />
+          {renderInput('referred', 'text', 'Referred by name')}
         </div>
       </fieldset>
 
@@ -79,12 +101,12 @@ const Client = ({ history, match, clients, addClient, editClient, deleteClient }
 
         <div className="form-group">
           <label htmlFor="city">City:</label>
-          <input type="text" name="city" placeholder="City" value={ client.city } onChange={ handleChange } />
+          {renderInput('city', 'text', 'City')}
         </div>
         
         <div className="form-group">
           <label htmlFor="state">State:</label>
-          <select name="state" value={ client.state } onChange={ handleChange }>
+          <select name="state" value={ client.state } onChange={ handleInputChange }>
             <option value="">Select State:</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
@@ -142,26 +164,34 @@ const Client = ({ history, match, clients, addClient, editClient, deleteClient }
         
         <div className="form-group">
           <label htmlFor="zip">Zip:</label>
-          <input type="text" name="zip" placeholder="Zip Code" value={ client.zip } onChange={ handleChange } />
+          {renderInput('zip', 'text', 'Zip Code')}
         </div>
 
         <div className="form-group">
           <label htmlFor="phone">*Phone:</label>
-          <input type="tel" name="phone" placeholder="Phone Number" required value={ client.phone } onChange={ handleChange } />
+          {renderInput('phone', 'tel', '000-000-0000', true)}
         </div>
 
         <div className="form-group">
           <label htmlFor="email">Email:</label>
-          <input type="tel" name="email" placeholder="email@domain.com" value={ client.email } onChange={ handleChange } />
+          {renderInput('email', 'email', 'email@domain.com')}
         </div>
       </fieldset>
 
-      <div>
+      <div style={{ overflow: 'auto' }}>
         <Button type="submit">
-          { client.id ? `+ Save Client` : `+ Add Client` }
+          { client.id ?
+            `Save Client`
+            : `+ Add Client`
+          }
         </Button>
         
-        { client.id ? <Button type="button" onClick={ removeClient }>+ Delete Client</Button> : null }
+        { client.id ? 
+          <Button type="button" onClick={ removeClient } className="float-right">
+            <Emoji emoji="🗑" label="Trashcan" /> Delete Client
+          </Button>
+          : null
+        }
       </div>
     </form>
 
