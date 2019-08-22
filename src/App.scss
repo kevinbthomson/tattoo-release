@@ -2,10 +2,22 @@
 @import "styles/modules/statements";
 @import "styles/modules/forms";
 
+body {
+  box-sizing: border-box;
+  background: #fff3f5;
+}
+
+main {
+  margin: 0;
+  padding: 1rem 0;
+  background: white;
+  min-height: 60vh;
+}
+
 .container {
   margin: 0 auto;
   width: 90%;
-  max-width: 640px;
+  max-width: 1280px;
 }
 
 footer {

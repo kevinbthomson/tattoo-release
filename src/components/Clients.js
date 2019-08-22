@@ -1,28 +1,37 @@
 import React from 'react';
-import { Table } from '../Elements';
+import { Link } from 'react-router-dom';
+import { Button, Table } from '../Elements';
 import ClientRow from './ClientRow';
 
-const Clients = ({ clients }) => (
+const Clients = ({ clients, addClient, editClient, deleteClient }) => (
   <div className="container">
     <Table>
       <thead>
         <tr>
           <th>First</th>
           <th>Last</th>
-          <th>Date of Birth</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Zip</th>
           <th>Phone</th>
+          <th>Email</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         { clients &&
           clients.map(client => (
-          <ClientRow client={ client } key={ client.phone } />
+          <ClientRow client={ client } editClient={ editClient } key={ client.id } />
         ))}
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            <Button style={{float: 'right'}}>
+              <Link to="/clients/client/:new">+ Add Client</Link>
+            </Button>
+          </td>
+        </tr>
+      </tfoot>
     </Table>
+    
   </div>
 );
 

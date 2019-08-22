@@ -1,57 +1,55 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
+import Statements from './Statements';
 import { Button } from '../Elements';
 
-const Client = ({ addClient }) => {
+const Client = ({ history, match, clients, addClient, editClient, deleteClient }) => {
+  const currentClient = clients.find(client => client.id === match.params.id);
+  const initialClientState = currentClient ? currentClient : {};
+  
+  const [client, setClient] = useState(initialClientState);
 
-  const firstRef = useRef();
-  const lastRef = useRef();
-  const dobRef = useRef();
-  const cityRef = useRef();
-  const stateIdRef = useRef();
-  const referredRef = useRef();
-  const stateRef = useRef();
-  const zipRef = useRef();
-  const phoneRef = useRef();
+  const handleChange = e => {
+    const inputValue = e.target.value;
+    const inputName = e.target.name;
+    setClient({ ...client, [inputName]: inputValue });
+  }
 
-  const clientSubmit = (e) => {
+  const clientSubmit = e => {
     e.preventDefault();
-
-    const client = {
-      first: firstRef.current.value,
-      last: lastRef.current.value,
-      dob: dobRef.current.value,
-      stateId: stateIdRef.current.value,
-      referred: referredRef.current.value,
-      city: cityRef.current.value,
-      state: stateRef.current.value,
-      zip: zipRef.current.value,
-      phone: phoneRef.current.value,
+    
+    if (client.id && client.first && client.last && client.phone) {
+      editClient(client);
+    } else if (client.first && client.last && client.phone) {
+      addClient(client);
+      history.goBack();
     }
+  };
 
-    if (client.phone === '' || client.phone === undefined) {
-      alert("Phone is required");
-      return;
+  const removeClient = (e) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this client?");
+
+    if (confirmDelete) {
+      deleteClient(client);
+      history.goBack();
     }
-
-    addClient(client);
-    e.target.reset();
   };
 
   return (
+    <>
     <form onSubmit={ clientSubmit } className="user-form container">
-      <h2>Client:</h2>
+      <h2>{ client.first && client.last ? `${client.first} ${client.last}` : `Add Client:` }</h2>
       
       <fieldset>
         <legend>Client Info</legend>
         
         <div className="form-group">
-          <label htmlFor="first">Name:</label>
-          <input type="text" name="first" placeholder="First Name" ref={ firstRef } />
+          <label htmlFor="first">*Name:</label>
+          <input type="text" name="first" placeholder="First Name" value={ client.first } onChange={ handleChange } required />
         </div>
         
         <div className="form-group">
-          <label htmlFor="last">Last Name:</label>
-          <input type="text" name="last" placeholder="Last Name" ref={ lastRef } />
+          <label htmlFor="last">*Last Name:</label>
+          <input type="text" name="last" placeholder="Last Name" value={ client.last } onChange={ handleChange } required />
         </div>
         
         <div className="form-group">
@@ -60,18 +58,19 @@ const Client = ({ addClient }) => {
             type="date" 
             name="dob"
             placeholder="Date of Birth" 
-            ref={ dobRef }
+            value={ client.dob }
+            onChange={ handleChange } 
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="stateId">State-issued ID:</label>
-          <input type="text" name="stateId" placeholder="ID Number" ref={ stateIdRef } />
+          <input type="text" name="stateId" placeholder="ID Number" value={ client.stateId } onChange={ handleChange } />
         </div>
 
         <div className="form-group">
           <label htmlFor="referred">Referred By:</label>
-          <input type="text" name="referred" placeholder="Referred Name" ref={ referredRef } />
+          <input type="text" name="referred" placeholder="Referred Name" value={ client.referred } onChange={ handleChange } />
         </div>
       </fieldset>
 
@@ -80,12 +79,13 @@ const Client = ({ addClient }) => {
 
         <div className="form-group">
           <label htmlFor="city">City:</label>
-          <input type="text" name="city" placeholder="City" ref={ cityRef } />
+          <input type="text" name="city" placeholder="City" value={ client.city } onChange={ handleChange } />
         </div>
         
         <div className="form-group">
           <label htmlFor="state">State:</label>
-          <select name="state" ref={ stateRef }>
+          <select name="state" value={ client.state } onChange={ handleChange }>
+            <option value="">Select State:</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
@@ -142,17 +142,31 @@ const Client = ({ addClient }) => {
         
         <div className="form-group">
           <label htmlFor="zip">Zip:</label>
-          <input type="text" name="zip" placeholder="Zip Code" ref={ zipRef } />
+          <input type="text" name="zip" placeholder="Zip Code" value={ client.zip } onChange={ handleChange } />
         </div>
 
         <div className="form-group">
-          <label htmlFor="phone">Phone:</label>
-          <input type="tel" name="phone" placeholder="Phone Number" ref={ phoneRef } />
+          <label htmlFor="phone">*Phone:</label>
+          <input type="tel" name="phone" placeholder="Phone Number" required value={ client.phone } onChange={ handleChange } />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
+          <input type="tel" name="email" placeholder="email@domain.com" value={ client.email } onChange={ handleChange } />
         </div>
       </fieldset>
 
-      <Button type="submit">+ Save Client</Button>
+      <div>
+        <Button type="submit">
+          { client.id ? `+ Save Client` : `+ Add Client` }
+        </Button>
+        
+        { client.id ? <Button type="button" onClick={ removeClient }>+ Delete Client</Button> : null }
+      </div>
     </form>
+
+    <Statements />
+    </>
   );
 };
 

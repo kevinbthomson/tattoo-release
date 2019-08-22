@@ -12,4 +12,9 @@ export const Button = styled.button`
   &:hover {
     background: magenta;
   }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
 `;

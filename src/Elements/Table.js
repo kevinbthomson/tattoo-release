@@ -7,7 +7,6 @@ export const Table = styled.table`
   td,
   th {
     padding: .5em;
-    border: 1px solid darkmagenta;
   }
 
   thead {
@@ -18,15 +17,29 @@ export const Table = styled.table`
       color: white;
     }
   }
+  
+  tfoot {
+    td {
+      padding: 0;
+      text-align: left;
+      font-weight: normal;
+      background: darkmagenta;
+      color: white;
+    }
+  }
 
   tbody {
     tr {
+      // border-bottom: 1px solid darkmagenta;
       
       &:nth-child(odd) {
         background: #fff3f5;
       }
 
       td {
+        white-space: no-wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-family: "Courier New", Courier, monospace;
       }
     }
