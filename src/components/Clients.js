@@ -4,7 +4,7 @@ import { Button, Table } from '../Elements';
 import ClientRow from './ClientRow';
 
 const Clients = ({ clients, addClient, editClient, deleteClient }) => (
-  <div className="container">
+  <div className="container table-container">
     <Table>
       <thead>
         <tr>

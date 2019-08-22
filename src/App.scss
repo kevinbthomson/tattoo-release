@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:700&display=swap");
 @import "styles/modules/statements";
 @import "styles/modules/forms";
 
@@ -9,19 +10,30 @@ body {
 main {
   margin: 0;
   padding: 1rem 0;
-  background: white;
+  background: #ccc;
   min-height: 60vh;
 
   h2 {
+    font-size: 2rem;
+    margin: 0;
     font-weight: 100;
     color: darkmagenta;
+    // text-shadow: 0 1px 0 white;
   }
 }
 
 .container {
-  margin: 0 auto;
+  margin: 0 1rem;
   width: 90%;
   max-width: 1280px;
+
+  @media screen and (min-width: 600px) {
+    margin: 0 auto;
+  }
+}
+
+.table-container {
+  overflow: auto;
 }
 
 footer {

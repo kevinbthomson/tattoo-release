@@ -20,16 +20,24 @@ const AppHeader = styled.header`
   position: relative;
   padding: 1rem;
   color: white;
-  background: Black;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  background: #333;
 
   h1 {
-    margin: 0;
+    position: relative;
     font-weight: 100;
+    left: -1rem;
+    color: white;
+    padding: 0.25rem 1rem;
+    width: 300px;
+    margin: 0 0 1rem 0;
+    background: darkmagenta;
+    transform: skewX(-10deg);
+    box-shadow: inset 4px 4px 0 darkmagenta, 4px 4px 0 black;
   }
 
   p {
     margin: 0;
+    text-shadow: 0 1px 0 black;
   }
 
   nav {
